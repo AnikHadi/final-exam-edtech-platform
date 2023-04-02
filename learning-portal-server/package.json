@@ -1,0 +1,16 @@
+{
+  "name": "lws-json-server-learning-portal",
+  "description": "Example in memory todos api with json-server by Learn with Sumit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server -delay 500 --watch db.json --no-cors true -m ./node_modules/json-server-auth  --port 9000"
+  },
+  "dependencies": {
+    "json-server": "^0.17.1",
+    "json-server-auth": "^2.1.0"
+  },
+  "keywords": [],
+  "author": "Sumit Saha, Learn with Sumit",
+  "license": "ISC"
+}
