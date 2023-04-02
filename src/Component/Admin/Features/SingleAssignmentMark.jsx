@@ -35,7 +35,7 @@ const SingleAssignmentMark = ({ assignmentMark }) => {
     if (value > 0 && value <= totalMark) {
       editAssignmentMark({
         id,
-        data: { ...assignmentMark, mark: value, status: "published" },
+        data: { ...assignmentMark, mark: Number(value), status: "published" },
       });
     }
   };

@@ -1,18 +1,78 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useGetAssignmentByVideoIdQuery } from "../../../features/assignment/assignmentAPI";
+import {
+  useAddAssignmentMarkMutation,
+  useGetAssignmentMarkByAssignmentIdStudentIdQuery,
+} from "../../../features/assignmentMark/assignmentMarkAPI";
+import { selectMemoizedAuth } from "../../../features/auth/authSelector";
 
 const VideoDescription = ({ video }) => {
   const { title, description, createdAt } = video || {};
+
   // all local state
   const [showModal, setShowModal] = useState(false);
+  const [assignmentByVideoId, setAssignmentByVideoId] = useState({});
+  const [assignmentStatus, setAssignmentStatus] = useState("");
   const { videoId } = useParams();
-  // console.log(repoLink);
 
+  // all redux state
+  const { data: assignment, isSuccess: fetchAssignmentByVideoIdSuccess } =
+    useGetAssignmentByVideoIdQuery(videoId);
+  const student = useSelector(selectMemoizedAuth);
+  const [addAssignmentMark, { isSuccess }] = useAddAssignmentMarkMutation();
+  const {
+    id: assignmentId,
+    title: assignmentTitle,
+    totalMark,
+  } = assignmentByVideoId || {};
+
+  // successfully submit message & set fetch assignment by video id in local state
+  useEffect(() => {
+    if (isSuccess) {
+      toast("Successfully submit repo link.");
+    } else if (fetchAssignmentByVideoIdSuccess) {
+      setAssignmentByVideoId(assignment[0]);
+    }
+  }, [isSuccess, fetchAssignmentByVideoIdSuccess, assignment]);
+
+  // start fetch update assignment mark data
+  const { data: assignmentMark, isSuccess: assignmentMarkSuccess } =
+    useGetAssignmentMarkByAssignmentIdStudentIdQuery({
+      assignmentId: assignmentByVideoId?.id,
+      studentId: student?.id,
+    });
+  useEffect(() => {
+    if (assignmentMarkSuccess) {
+      setAssignmentStatus(assignmentMark[0]?.status);
+    }
+  }, [assignmentMarkSuccess, assignmentMark]);
+  // end fetch update assignment mark data
+
+  // handler submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.repoLink.value);
-    setShowModal(!showModal);
+    const repo_link = e.target.repoLink.value;
+    const confirmation = window.confirm(
+      "Confirm, You want to submit your repo link?"
+    );
+    if (confirmation) {
+      addAssignmentMark({
+        student_id: student?.id,
+        student_name: student?.name,
+        assignment_id: assignmentId,
+        title: assignmentTitle,
+        createdAt: new Date().toISOString(),
+        totalMark,
+        mark: 0,
+        repo_link,
+        status: "pending",
+      });
+      setShowModal(!showModal);
+    }
     e.target.reset();
   };
 
@@ -27,8 +87,12 @@ const VideoDescription = ({ video }) => {
 
       <div className="flex gap-4">
         <button
+          disabled={assignmentStatus === "published"}
           onClick={() => setShowModal(!showModal)}
-          className="px-3 font-bold py-1 border border-cyan text-cyan rounded-full text-sm hover:bg-cyan hover:text-primary"
+          className={`px-3 font-bold py-1 border border-cyan text-cyan rounded-full text-sm hover:bg-cyan hover:text-primary ${
+            assignmentStatus === "published" &&
+            "border-red-500 text-gray-400 hover:!bg-gray-300 hover:!text-gray-900"
+          }`}
         >
           এসাইনমেন্ট
         </button>

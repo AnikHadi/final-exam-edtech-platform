@@ -385,7 +385,7 @@
       "title": "Assignment 1 - Implement Debounce Function",
       "createdAt": "2021-01-15T15:17:01.727Z",
       "totalMark": 100,
-      "mark": "10",
+      "mark": 10,
       "repo_link": "https://github.com/Learn-with-Sumit/assignment-1",
       "status": "published"
     },
@@ -393,7 +393,7 @@
       "id": 2,
       "student_id": 2,
       "student_name": "Saad Hasan",
-      "assignment_id": 1,
+      "assignment_id": 2,
       "title": "Assignment 2 - Implement Best Practices",
       "createdAt": "2021-01-15T15:17:01.727Z",
       "totalMark": 100,
@@ -405,13 +405,37 @@
       "id": 3,
       "student_id": 3,
       "student_name": "Akash Ahmed",
-      "assignment_id": 1,
+      "assignment_id": 2,
       "title": "Assignment 2 - Implement Best Practices",
       "createdAt": "2021-01-15T15:17:01.727Z",
       "totalMark": 100,
       "mark": 50,
       "repo_link": "https://github.com/Learn-with-Sumit/assignment-1",
       "status": "published"
+    },
+    {
+      "student_id": 8,
+      "student_name": "Md Hadiuzzaman",
+      "assignment_id": 8,
+      "title": "Assignment 11 - segz gzsg szgszgsgzs gs e gs",
+      "createdAt": "2023-04-02T20:22:18.477Z",
+      "totalMark": 90,
+      "mark": 20,
+      "repo_link": "https://github.com/HadiAnik/task-manager-rtk-query.git",
+      "status": "published",
+      "id": 4
+    },
+    {
+      "student_id": 9,
+      "student_name": "Anik",
+      "assignment_id": 1,
+      "title": "Assignment 1 - Implement Debounce Function",
+      "createdAt": "2023-04-02T21:31:13.024Z",
+      "totalMark": 100,
+      "mark": 100,
+      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
+      "status": "published",
+      "id": 5
     }
   ],
   "quizMark": [
