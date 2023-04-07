@@ -8,7 +8,7 @@ Redux Project Learning Portal with RTK Query
 
 ## Documentation
 
-[Live Project](https://silver-kulfi-f75ece.netlify.app/)
+[Live Project](https://inquisitive-starburst-a7efc5.netlify.app/)
 
 ## How to run
 
