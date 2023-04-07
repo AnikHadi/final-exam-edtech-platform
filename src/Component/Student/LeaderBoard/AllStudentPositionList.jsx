@@ -2,6 +2,8 @@ import React from "react";
 // import { useGetUsersQuery } from "../../../features/user/userAPI";
 
 const AllStudentPositionList = ({ data }) => {
+  const number = data.map((std) => std.totalMark);
+  const uniqueNumber = [...new Set(number)].slice();
   return (
     data.length > 0 && (
       <div className="my-8">
@@ -19,9 +21,11 @@ const AllStudentPositionList = ({ data }) => {
 
           <tbody>
             {data?.map((stu, i) => {
+              const position =
+                uniqueNumber.findIndex((item) => item === stu.totalMark) + 1;
               return (
                 <tr className="border-b border-slate-600/50" key={i}>
-                  <td className="table-td text-center">{i + 1}</td>
+                  <td className="table-td text-center">{position}</td>
                   <td className="table-td text-center">{stu.name}</td>
                   <td className="table-td text-center">{stu.quizMark}</td>
                   <td className="table-td text-center">{stu.assignmentMark}</td>
