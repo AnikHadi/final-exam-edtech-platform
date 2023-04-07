@@ -1,6 +1,6 @@
 # Project Title Learning Portal
 
-Redux Project Task Manager with RTK Query
+Redux Project Learning Portal with RTK Query
 
 ## Authors
 
