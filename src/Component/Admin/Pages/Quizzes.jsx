@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useGetQuizzesQuery } from "../../../features/quizzes/quizzesAPI";
 import Loading from "../../ui/Loading";
 import SingleQuizzes from "../Features/SingleQuizzes";
@@ -6,7 +7,6 @@ import AddQuizzesInput from "../InputForm/AddQuizzesInput";
 import AdminNavbar from "../Share/AdminNavbar";
 
 const AdminQuizzes = () => {
-  // <title>Quizzes</title>;
   // all local state
   const [showModal, setShowModal] = useState(false);
 
@@ -25,6 +25,9 @@ const AdminQuizzes = () => {
     </div>
   ) : (
     <div>
+      <Helmet>
+        <title>Quizzes</title>
+      </Helmet>
       <AdminNavbar />
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-full px-5 lg:px-20">

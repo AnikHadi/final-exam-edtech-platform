@@ -1,12 +1,11 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useGetAssignmentsMarkQuery } from "../../../features/assignmentMark/assignmentMarkAPI";
 import Loading from "../../ui/Loading";
 import SingleAssignmentMark from "../Features/SingleAssignmentMark";
 import AdminNavbar from "../Share/AdminNavbar";
 
 const AdminAssignmentMark = () => {
-  //  <title>Assignment Mark</title>
-
   // all redux state
   const {
     data: assignmentMark,
@@ -35,6 +34,9 @@ const AdminAssignmentMark = () => {
     </div>
   ) : (
     <div>
+      <Helmet>
+        <title>Assignment Mark</title>
+      </Helmet>
       <AdminNavbar />
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-full px-5 lg:px-20">

@@ -1,11 +1,14 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import AdminNavbar from "../Share/AdminNavbar";
 
 const AdminDashboard = () => {
-  // <title>Player</title>
   return (
     <div>
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <AdminNavbar />
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-7xl px-5 lg:px-0">

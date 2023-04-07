@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/image/learningportal.svg";
 import { useLoginMutation } from "../../../features/auth/authAPI";
@@ -46,6 +47,9 @@ const Login = () => {
 
   return (
     <section className="py-6 bg-primary h-screen grid place-items-center">
+      <Helmet>
+        <title>Student Login</title>
+      </Helmet>
       <div className="mx-auto max-w-md px-5 lg:px-0">
         <div>
           <img className="h-12 mx-auto" src={logo} alt="#" />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/image/learningportal.svg";
@@ -6,7 +7,6 @@ import { useLoginMutation } from "../../../features/auth/authAPI";
 import Error from "../../ui/Error";
 
 const AdminLogin = () => {
-  // <title>Admin Login</title>
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -41,6 +41,9 @@ const AdminLogin = () => {
   };
   return (
     <section className="py-6 bg-primary h-screen grid place-items-center">
+      <Helmet>
+        <title>Admin Login</title>
+      </Helmet>
       <div className="mx-auto max-w-md px-5 lg:px-0">
         <div>
           <img className="h-12 mx-auto" src={logo} alt="#" />

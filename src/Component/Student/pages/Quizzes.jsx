@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { useEffect, useReducer, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { selectMemoizedAuth } from "../../../features/auth/authSelector";
@@ -138,6 +139,9 @@ const Quizzes = () => {
   ) : (
     data?.length > 0 && (
       <div>
+        <Helmet>
+          <title>Learning Portal - Quiz</title>
+        </Helmet>
         <Navbar />
         <section className="py-6 bg-primary">
           <div className="mx-auto max-w-7xl px-5 lg:px-0">

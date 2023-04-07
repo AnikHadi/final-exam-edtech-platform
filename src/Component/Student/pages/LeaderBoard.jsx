@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { useEffect, useReducer } from "react";
+import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 import { useGetAssignmentsMarkQuery } from "../../../features/assignmentMark/assignmentMarkAPI";
 import { selectMemoizedAuth } from "../../../features/auth/authSelector";
@@ -70,17 +71,18 @@ const reducer = (state, action) => {
 }; // ! for use reducer end
 
 const LeaderBoard = () => {
-  // <title>Leaderboard</title>;
   const [state, dispatch] = useReducer(reducer, initialState);
   const auth = useSelector(selectMemoizedAuth);
 
-  const { data: userData } = useGetUsersQuery();
-  const { data: quizMark } = useGetQuizMarkQuery();
-  const { data: assignmentsMar } = useGetAssignmentsMarkQuery();
-
-  useEffect(() => {
-    document.title = "Quiz - Leaderboard";
-  }, []);
+  const { data: userData } = useGetUsersQuery(undefined, {
+    refetchOnFocus: true,
+  });
+  const { data: quizMark } = useGetQuizMarkQuery(undefined, {
+    refetchOnFocus: true,
+  });
+  const { data: assignmentsMar } = useGetAssignmentsMarkQuery(undefined, {
+    refetchOnFocus: true,
+  });
 
   useEffect(() => {
     if (userData?.length > 0) {
@@ -101,6 +103,9 @@ const LeaderBoard = () => {
   return (
     state.sortedStudent?.length > 0 && (
       <div>
+        <Helmet>
+          <title>Leaderboard</title>
+        </Helmet>
         <Navbar />
         <section className="py-6 bg-primary">
           <div className="mx-auto max-w-7xl px-5 lg:px-0">

@@ -8,7 +8,6 @@ import AdminQuizzes from "./Component/Admin/Pages/Quizzes";
 import AdminVideos from "./Component/Admin/Pages/Videos";
 import PrivateAdminRoute from "./Component/PrivateAdminRoute";
 import PrivateRoute from "./Component/PrivateRoute";
-// import QuizzesExtra from "./Component/Student/NewQuizzes/QuizzesExtra";
 import PublicAdminRoute from "./Component/PublicAdminRoute";
 import PublicRoute from "./Component/PublicRoute";
 import LeaderBoard from "./Component/Student/pages/LeaderBoard";

@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import { useGetVideoQuery } from "../../../features/videos/videosAPI";
 import Loading from "../../ui/Loading";
@@ -7,7 +8,6 @@ import VideoDescription from "../Video/VideoDescription";
 import VideoList from "../Video/VideoList";
 
 const Videos = () => {
-  //  <title>Player</title>
   const { videoId } = useParams();
   const { data, isError, isLoading } = useGetVideoQuery(videoId);
 
@@ -24,6 +24,9 @@ const Videos = () => {
     </div>
   ) : (
     <div>
+      <Helmet>
+        <title>LWS - Home</title>
+      </Helmet>
       <Navbar />
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-7xl px-5 lg:px-0">

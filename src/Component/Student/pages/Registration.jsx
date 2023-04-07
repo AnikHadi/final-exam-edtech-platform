@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/image/learningportal.svg";
 import { useRegisterMutation } from "../../../features/auth/authAPI";
@@ -6,7 +7,6 @@ import isValidEmail from "../../../utils/isValidEmail";
 import Error from "../../ui/Error";
 
 const Registration = () => {
-  // <title>Student Registration</title>
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,6 +52,9 @@ const Registration = () => {
 
   return (
     <section className="py-6 bg-primary h-screen grid place-items-center">
+      <Helmet>
+        <title>Student Registration</title>
+      </Helmet>
       <div className="mx-auto max-w-md px-5 lg:px-0">
         <div>
           <img className="h-12 mx-auto" src={logo} alt="#" />

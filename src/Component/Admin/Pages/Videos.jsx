@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useGetVideosQuery } from "../../../features/videos/videosAPI";
 import Loading from "../../ui/Loading";
 import ToastMessage from "../../ui/ToastMessage";
@@ -7,7 +8,6 @@ import AddVideoInput from "../InputForm/AddVideoInput";
 import AdminNavbar from "../Share/AdminNavbar";
 
 const AdminVideos = () => {
-  // <title>Videos</title>
   // all local state
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState("");
@@ -28,6 +28,9 @@ const AdminVideos = () => {
     </div>
   ) : (
     <div>
+      <Helmet>
+        <title>Add Videos</title>
+      </Helmet>
       <AdminNavbar />
       <section className="py-6 bg-primary">
         <ToastMessage message={message} status={status} />

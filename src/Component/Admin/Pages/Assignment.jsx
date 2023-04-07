@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useGetAssignmentsQuery } from "../../../features/assignment/assignmentAPI";
 import Loading from "../../ui/Loading";
 import SingleAssignment from "../Features/SingleAssignment";
@@ -6,7 +7,6 @@ import AddAssignmentInput from "../InputForm/AddAssignmentInput";
 import AdminNavbar from "../Share/AdminNavbar";
 
 const AdminAssignment = () => {
-  // <title>Add Assignment</title>
   const [showModal, setShowModal] = useState(false);
 
   // all redux state
@@ -24,6 +24,9 @@ const AdminAssignment = () => {
     </div>
   ) : (
     <div>
+      <Helmet>
+        <title>Add Assignment</title>
+      </Helmet>
       <AdminNavbar />
       <section className="py-6 bg-primary">
         <div className="mx-auto max-w-full px-5 lg:px-20">
