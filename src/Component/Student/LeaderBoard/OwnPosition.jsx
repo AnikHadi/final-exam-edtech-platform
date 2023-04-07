@@ -1,8 +1,12 @@
 import React from "react";
 
 const OwnPosition = ({ auth, data = [] }) => {
-  const ownData = data.filter((user, i) => user.id === auth.id);
-  const position = data.findIndex((user) => user.id === auth.id) + 1;
+  const ownData = data.filter((user) => user.id === auth.id);
+  const totalMarkArray = data.map((std) => std.totalMark);
+  const uniqueTotalMarkArray = [...new Set(totalMarkArray)].slice();
+  const position =
+    uniqueTotalMarkArray.findIndex((item) => item === ownData[0].totalMark) + 1;
+
   return (
     ownData.length > 0 && (
       <div>

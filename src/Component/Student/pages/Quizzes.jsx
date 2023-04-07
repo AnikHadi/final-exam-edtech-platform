@@ -59,7 +59,7 @@ const Quizzes = () => {
   }; // ! new handle copy and answer quizzes mark end
 
   // * add quiz mark in db
-  const [addQuizMark] = useAddQuizMarkMutation();
+  const [addQuizMark, { isSuccess }] = useAddQuizMarkMutation();
 
   // TODO
   const calculate = () => {
@@ -84,6 +84,13 @@ const Quizzes = () => {
       });
     return score;
   };
+
+  // navigate to leaderboard
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/leaderboard");
+    }
+  }, [isSuccess, navigate]);
 
   const userScore = calculate();
 
@@ -113,10 +120,9 @@ const Quizzes = () => {
       mark: userScore,
     };
     addQuizMark(newQuizMark);
-
-    navigate(`/courses/${videoId}/quizzes/answer`, {
-      state: { qna, questions, userScore },
-    });
+    // navigate(`/courses/${videoId}/quizzes/answer`, {
+    //   state: { qna, questions, userScore },
+    // });
   };
   const lastIndex = data?.length - 1;
 

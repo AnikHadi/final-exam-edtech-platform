@@ -494,9 +494,9 @@
       "title": "Assignment 10 - ট্রাফিক সিগন্যালেই পুলিশের ইফতার | DBC NEWS",
       "createdAt": "2023-04-07T08:11:46.913Z",
       "totalMark": 100,
-      "mark": 0,
+      "mark": 50,
       "repo_link": "khnjnjkkj",
-      "status": "pending",
+      "status": "published",
       "id": 9
     }
   ],
@@ -560,6 +560,30 @@
       "totalMark": 10,
       "mark": 10,
       "id": 5
+    },
+    {
+      "student_id": 8,
+      "student_name": "Md Hadiuzzaman",
+      "video_id": 3,
+      "video_title": "আল্লাহ্‌র তলোয়ার খালিদ বিন ওয়ালীদের  পর্ব- ৩২",
+      "totalQuiz": 2,
+      "totalCorrect": 1,
+      "totalWrong": 1,
+      "totalMark": 10,
+      "mark": 5,
+      "id": 6
+    },
+    {
+      "student_id": 8,
+      "student_name": "Md Hadiuzzaman",
+      "video_id": 2,
+      "video_title": "#2 JavaScript Tips and Tricks - JavaScript Job Interview Questions",
+      "totalQuiz": 1,
+      "totalCorrect": 1,
+      "totalWrong": 0,
+      "totalMark": 5,
+      "mark": 5,
+      "id": 7
     }
   ]
 }
