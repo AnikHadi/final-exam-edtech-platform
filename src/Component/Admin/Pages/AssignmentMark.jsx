@@ -58,6 +58,7 @@ const AdminAssignmentMark = () => {
                     <th className="table-th">Date</th>
                     <th className="table-th">Student Name</th>
                     <th className="table-th">Repo Link</th>
+                    <th className="table-th">Total Mark</th>
                     <th className="table-th">Mark</th>
                   </tr>
                 </thead>

@@ -7,6 +7,7 @@ export const userApi = apiSlice.injectEndpoints({
       query: () => "/users",
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         const { data } = await queryFulfilled;
+
         const allStudent = await data?.filter((std) => std.role !== "admin");
         if (allStudent.length > 0) {
           dispatch(addStudentLeaderBoard(allStudent));

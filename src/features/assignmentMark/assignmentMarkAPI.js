@@ -1,9 +1,16 @@
 import { apiSlice } from "../api/apiSlice";
+import { editStudentLeaderBoardWithAssignment } from "../leaderBoard/loaderboardSlice";
 
 export const assignmentMarkApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAssignmentsMark: builder.query({
       query: () => "/assignmentMark",
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        const { data } = await queryFulfilled;
+        if (data.length > 0) {
+          dispatch(editStudentLeaderBoardWithAssignment(data));
+        }
+      },
     }),
     getAssignmentMark: builder.query({
       query: (id) => `/assignmentMark/${id}`,

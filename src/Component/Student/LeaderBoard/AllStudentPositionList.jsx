@@ -1,44 +1,38 @@
 import React from "react";
-import { useGetUsersQuery } from "../../../features/user/userAPI";
-import SingleStudentPosition from "./SingleStudentPosition";
+// import { useGetUsersQuery } from "../../../features/user/userAPI";
 
-const AllStudentPositionList = ({ ownEmail }) => {
-  const { data: users, isLoading, isError } = useGetUsersQuery();
-
-  const studentList = users
-    ?.filter((std) => {
-      if (std.email === ownEmail) {
-        return "";
-      } else if (std.role === "admin") {
-        return "";
-      } else {
-        return std;
-      }
-    })
-    .sort((a, b) => b.id - a.id);
-
-  // console.log(studentList);
+const AllStudentPositionList = ({ data }) => {
   return (
-    <div className="my-8">
-      <h3 className="text-lg font-bold">Top 20 Result</h3>
-      <table className="text-base w-full border border-slate-600/50 rounded-md my-4">
-        <thead>
-          <tr className="border-b border-slate-600/50">
-            <th className="table-th !text-center">Rank</th>
-            <th className="table-th !text-center">Name</th>
-            <th className="table-th !text-center">Quiz Mark</th>
-            <th className="table-th !text-center">Assignment Mark</th>
-            <th className="table-th !text-center">Total</th>
-          </tr>
-        </thead>
+    data.length > 0 && (
+      <div className="my-8">
+        <h3 className="text-lg font-bold">Top 20 Result</h3>
+        <table className="text-base w-full border border-slate-600/50 rounded-md my-4">
+          <thead>
+            <tr className="border-b border-slate-600/50">
+              <th className="table-th !text-center">Rank</th>
+              <th className="table-th !text-center">Name</th>
+              <th className="table-th !text-center">Quiz Mark</th>
+              <th className="table-th !text-center">Assignment Mark</th>
+              <th className="table-th !text-center">Total</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {studentList?.map((stu, i) => (
-            <SingleStudentPosition student={stu} key={i} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+          <tbody>
+            {data?.map((stu, i) => {
+              return (
+                <tr className="border-b border-slate-600/50" key={i}>
+                  <td className="table-td text-center">{i + 1}</td>
+                  <td className="table-td text-center">{stu.name}</td>
+                  <td className="table-td text-center">{stu.quizMark}</td>
+                  <td className="table-td text-center">{stu.assignmentMark}</td>
+                  <td className="table-td text-center">{stu.totalMark}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    )
   );
 };
 

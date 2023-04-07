@@ -9,4 +9,5 @@ function InputOption({ text, ...rest }) {
   );
 }
 
+// export default InputOption;
 export default InputOption;

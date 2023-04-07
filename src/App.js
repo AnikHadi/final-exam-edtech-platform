@@ -8,9 +8,11 @@ import AdminQuizzes from "./Component/Admin/Pages/Quizzes";
 import AdminVideos from "./Component/Admin/Pages/Videos";
 import PrivateAdminRoute from "./Component/PrivateAdminRoute";
 import PrivateRoute from "./Component/PrivateRoute";
+// import QuizzesExtra from "./Component/Student/NewQuizzes/QuizzesExtra";
 import LeaderBoard from "./Component/Student/pages/LeaderBoard";
 import Login from "./Component/Student/pages/Login";
 import Quizzes from "./Component/Student/pages/Quizzes";
+import QuizzesAnswer from "./Component/Student/pages/QuizzesAnswer";
 import Registration from "./Component/Student/pages/Registration";
 import Videos from "./Component/Student/pages/Videos";
 import useAuthCheck from "./hooks/userAuthCheck";
@@ -81,6 +83,15 @@ function App() {
           element={
             <PrivateRoute>
               <Quizzes />
+              {/* <QuizzesExtra /> */}
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/courses/:videoId/quizzes/answer"
+          element={
+            <PrivateRoute>
+              <QuizzesAnswer />
             </PrivateRoute>
           }
         />

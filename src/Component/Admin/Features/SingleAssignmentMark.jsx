@@ -37,6 +37,8 @@ const SingleAssignmentMark = ({ assignmentMark }) => {
         id,
         data: { ...assignmentMark, mark: Number(value), status: "published" },
       });
+    } else {
+      toast("Please enter correct mark.");
     }
   };
   return (
@@ -45,9 +47,10 @@ const SingleAssignmentMark = ({ assignmentMark }) => {
       <td className="table-td">{new Date(createdAt).toLocaleString()}</td>
       <td className="table-td">{student_name}</td>
       <td className="table-td">{repo_link}</td>
+      <td className="table-td">{totalMark}</td>
       <td className="table-td input-mark ">
         <input
-          max="100"
+          max="500"
           value={value}
           readOnly={mark > 0}
           onChange={(e) => setValue(e.target.value)}

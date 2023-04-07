@@ -9,6 +9,7 @@ import {
   useGetAssignmentMarkByAssignmentIdStudentIdQuery,
 } from "../../../features/assignmentMark/assignmentMarkAPI";
 import { selectMemoizedAuth } from "../../../features/auth/authSelector";
+import { useGetQuizMarkByVideoIdAndStudentIdQuery } from "../../../features/quizzesMark/quizzesMarkSlice";
 
 const VideoDescription = ({ video }) => {
   const { title, description, createdAt } = video || {};
@@ -16,41 +17,69 @@ const VideoDescription = ({ video }) => {
   // all local state
   const [showModal, setShowModal] = useState(false);
   const [assignmentByVideoId, setAssignmentByVideoId] = useState({});
-  const [assignmentStatus, setAssignmentStatus] = useState("");
+  const [responseAddAssignmentMark, setResponseAddAssignmentMark] = useState(
+    {}
+  );
   const { videoId } = useParams();
 
   // all redux state
-  const { data: assignment, isSuccess: fetchAssignmentByVideoIdSuccess } =
-    useGetAssignmentByVideoIdQuery(videoId);
+
+  // ! for get information and create new assignment mark  (1)
   const student = useSelector(selectMemoizedAuth);
-  const [addAssignmentMark, { isSuccess }] = useAddAssignmentMarkMutation();
+  // TODO {complete}                              (2)
+  const { data: assignmentInfo, isSuccess: fetchAssignmentByVideoIdSuccess } =
+    useGetAssignmentByVideoIdQuery(videoId, {
+      refetchOnMountOrArgChange: true,
+    });
   const {
     id: assignmentId,
     title: assignmentTitle,
     totalMark,
   } = assignmentByVideoId || {};
+  // get information for create new assignment mark
 
-  // successfully submit message & set fetch assignment by video id in local state
+  // ! for create new assignment mark in database    (3)
+  const [addAssignmentMark, { data, isSuccess }] =
+    useAddAssignmentMarkMutation();
+
+  // console.log(
+  //   "responseAddAssignmentMark: ",
+  //   responseAddAssignmentMark,
+  //   assignmentInfo
+  // );
+
+  // start fetch update assignment mark data {complete}  (4)
+  const { data: assignmentMark } =
+    useGetAssignmentMarkByAssignmentIdStudentIdQuery(
+      {
+        assignmentId,
+        studentId: student?.id,
+      },
+      { refetchOnMountOrArgChange: true }
+    );
+
+  // TODO quiz mark update  {complete}  (5)
+  const { data: quizMark } = useGetQuizMarkByVideoIdAndStudentIdQuery(
+    {
+      videoId,
+      studentId: student?.id,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
+
+  // set fetch assignment by video id in local state {complete}
   useEffect(() => {
     if (isSuccess) {
       toast("Successfully submit repo link.");
-    } else if (fetchAssignmentByVideoIdSuccess) {
-      setAssignmentByVideoId(assignment[0]);
+      setResponseAddAssignmentMark(data);
     }
-  }, [isSuccess, fetchAssignmentByVideoIdSuccess, assignment]);
+  }, [isSuccess]);
 
-  // start fetch update assignment mark data
-  const { data: assignmentMark, isSuccess: assignmentMarkSuccess } =
-    useGetAssignmentMarkByAssignmentIdStudentIdQuery({
-      assignmentId: assignmentByVideoId?.id,
-      studentId: student?.id,
-    });
   useEffect(() => {
-    if (assignmentMarkSuccess) {
-      setAssignmentStatus(assignmentMark[0]?.status);
+    if (fetchAssignmentByVideoIdSuccess) {
+      setAssignmentByVideoId(assignmentInfo[0]);
     }
-  }, [assignmentMarkSuccess, assignmentMark]);
-  // end fetch update assignment mark data
+  }, [fetchAssignmentByVideoIdSuccess, assignmentInfo]);
 
   // handler submit
   const handleSubmit = (e) => {
@@ -76,6 +105,9 @@ const VideoDescription = ({ video }) => {
     e.target.reset();
   };
 
+  const btnDisable = "border-red-500 text-gray-400";
+  const btnActive = "border-cyan text-cyan hover:bg-cyan hover:text-primary";
+
   return (
     <div>
       <h1 className="text-lg font-semibold tracking-tight text-slate-100">
@@ -87,19 +119,45 @@ const VideoDescription = ({ video }) => {
 
       <div className="flex gap-4">
         <button
-          disabled={assignmentStatus === "published"}
+          disabled={
+            (assignmentMark?.length > 0
+              ? assignmentMark[0].status === "published" ||
+                assignmentMark[0].status === "pending"
+              : false) ||
+            (responseAddAssignmentMark?.length > 0 &&
+            responseAddAssignmentMark &&
+            responseAddAssignmentMark.assignment_id === assignmentInfo?.id
+              ? responseAddAssignmentMark.status === "published" ||
+                responseAddAssignmentMark.status === "pending"
+              : false)
+          }
           onClick={() => setShowModal(!showModal)}
-          className={`px-3 font-bold py-1 border border-cyan text-cyan rounded-full text-sm hover:bg-cyan hover:text-primary ${
-            assignmentStatus === "published" &&
-            "border-red-500 text-gray-400 hover:!bg-gray-300 hover:!text-gray-900"
+          className={`px-3 font-bold py-1 border rounded-full text-sm   ${
+            (assignmentMark?.length > 0 &&
+            (assignmentMark[0].status === "published" ||
+              assignmentMark[0].status === "pending")
+              ? btnDisable
+              : btnActive) ||
+            (assignmentInfo.length > 0 &&
+            responseAddAssignmentMark &&
+            responseAddAssignmentMark.assignment_id === assignmentInfo[0].id
+              ? btnDisable
+              : btnActive)
           }`}
         >
           এসাইনমেন্ট
         </button>
 
         <Link
-          to={`/courses/${videoId}/quizzes`}
-          className="px-3 font-bold py-1 border border-cyan text-cyan rounded-full text-sm hover:bg-cyan hover:text-primary"
+          disabled
+          to={
+            quizMark?.length > 0
+              ? `/courses/${videoId}`
+              : `/courses/${videoId}/quizzes`
+          }
+          className={`px-3 font-bold py-1 border   rounded-full text-sm  ${
+            quizMark?.length > 0 ? btnDisable : btnActive
+          }`}
         >
           কুইজে অংশগ্রহণ করুন
         </Link>
