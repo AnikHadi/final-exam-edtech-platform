@@ -9,6 +9,8 @@ import AdminVideos from "./Component/Admin/Pages/Videos";
 import PrivateAdminRoute from "./Component/PrivateAdminRoute";
 import PrivateRoute from "./Component/PrivateRoute";
 // import QuizzesExtra from "./Component/Student/NewQuizzes/QuizzesExtra";
+import PublicAdminRoute from "./Component/PublicAdminRoute";
+import PublicRoute from "./Component/PublicRoute";
 import LeaderBoard from "./Component/Student/pages/LeaderBoard";
 import Login from "./Component/Student/pages/Login";
 import Quizzes from "./Component/Student/pages/Quizzes";
@@ -25,8 +27,22 @@ function App() {
   ) : (
     <div>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/admin" element={<AdminLogin />} />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <PublicAdminRoute>
+              <AdminLogin />
+            </PublicAdminRoute>
+          }
+        />
         <Route
           path="/admin/dashboard"
           element={
@@ -69,7 +85,14 @@ function App() {
         />
 
         {/* student Route section */}
-        <Route path="/student-registration" element={<Registration />} />
+        <Route
+          path="/student-registration"
+          element={
+            <PublicRoute>
+              <Registration />{" "}
+            </PublicRoute>
+          }
+        />
         <Route
           path="/courses/:videoId"
           element={
@@ -83,7 +106,6 @@ function App() {
           element={
             <PrivateRoute>
               <Quizzes />
-              {/* <QuizzesExtra /> */}
             </PrivateRoute>
           }
         />
