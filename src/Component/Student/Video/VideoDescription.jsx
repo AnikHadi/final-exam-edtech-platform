@@ -1,5 +1,6 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import _ from "lodash";
+import React, { useEffect, useReducer, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,48 +12,68 @@ import {
 import { selectMemoizedAuth } from "../../../features/auth/authSelector";
 import { useGetQuizMarkByVideoIdAndStudentIdQuery } from "../../../features/quizzesMark/quizzesMarkSlice";
 
+// ! for use reducer start
+const initialState = {
+  assignmentInfo: {},
+  addAssignmentMarkResponse: {},
+  getAssignmentMark: {},
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_ASSIGNMENT_INFO":
+      const assignment = _.cloneDeep(action.payload);
+      return { ...state, assignmentInfo: assignment };
+
+    case "ADD_ASSIGNMENT_MARK_RESPONSE":
+      return { ...state, addAssignmentMarkResponse: action.payload };
+
+    case "GET_ASSIGNMENT_MARK":
+      return { ...state, getAssignmentMark: action.payload };
+    default:
+      return state;
+  }
+}; // ! for use reducer end
+
 const VideoDescription = ({ video }) => {
   const { title, description, createdAt } = video || {};
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   // all local state
   const [showModal, setShowModal] = useState(false);
-  const [assignmentByVideoId, setAssignmentByVideoId] = useState({});
-  const [responseAddAssignmentMark, setResponseAddAssignmentMark] = useState(
-    {}
-  );
+  const [assignmentBtn, setAssignmentBtn] = useState(false);
   const { videoId } = useParams();
 
-  // all redux state
+  const { assignmentInfo, addAssignmentMarkResponse, getAssignmentMark } =
+    state || {};
 
+  // console.log("addAssignmentMarkResponse", addAssignmentMarkResponse);
+  // console.log("getAssignmentMark", getAssignmentMark);
+
+  // all redux state
   // ! for get information and create new assignment mark  (1)
   const student = useSelector(selectMemoizedAuth);
-  // TODO {complete}                              (2)
-  const { data: assignmentInfo, isSuccess: fetchAssignmentByVideoIdSuccess } =
-    useGetAssignmentByVideoIdQuery(videoId, {
+  // TODO {complete}             added useReducer                 (2)
+  const { data: assignmentInformation } = useGetAssignmentByVideoIdQuery(
+    videoId,
+    {
       refetchOnMountOrArgChange: true,
-    });
-  const {
-    id: assignmentId,
-    title: assignmentTitle,
-    totalMark,
-  } = assignmentByVideoId || {};
-  // get information for create new assignment mark
+    }
+  );
+  // const {
+  //   id: assignmentId,
+  //   title: assignmentTitle,
+  //   totalMark,
+  // } = state?.assignmentInfo || {};
 
-  // ! for create new assignment mark in database    (3)
+  // ! for create new assignment mark in database     added useReducer        (3)
   const [addAssignmentMark, { data, isSuccess }] =
     useAddAssignmentMarkMutation();
 
-  // console.log(
-  //   "responseAddAssignmentMark: ",
-  //   responseAddAssignmentMark,
-  //   assignmentInfo
-  // );
-
-  // start fetch update assignment mark data {complete}  (4)
+  // start fetch update assignment mark data    added useReducer    (4)
   const { data: assignmentMark } =
     useGetAssignmentMarkByAssignmentIdStudentIdQuery(
       {
-        assignmentId,
+        assignmentId: assignmentInfo?.id,
         studentId: student?.id,
       },
       { refetchOnMountOrArgChange: true }
@@ -67,19 +88,34 @@ const VideoDescription = ({ video }) => {
     { refetchOnMountOrArgChange: true }
   );
 
+  useEffect(() => {
+    if (assignmentInformation?.length > 0) {
+      dispatch({
+        type: "ADD_ASSIGNMENT_INFO",
+        payload: assignmentInformation[0],
+      });
+    } else if (assignmentInformation?.length === 0) {
+      dispatch({ type: "ADD_ASSIGNMENT_INFO", payload: {} });
+    }
+  }, [assignmentInformation]);
+
   // set fetch assignment by video id in local state {complete}
   useEffect(() => {
     if (isSuccess) {
       toast("Successfully submit repo link.");
-      setResponseAddAssignmentMark(data);
+      dispatch({ type: "ADD_ASSIGNMENT_MARK_RESPONSE", payload: data });
     }
-  }, [isSuccess]);
+  }, [isSuccess, data]);
 
   useEffect(() => {
-    if (fetchAssignmentByVideoIdSuccess) {
-      setAssignmentByVideoId(assignmentInfo[0]);
+    if (assignmentMark?.length > 0) {
+      dispatch({ type: "ADD_ASSIGNMENT_MARK_RESPONSE", payload: {} });
+      dispatch({ type: "GET_ASSIGNMENT_MARK", payload: assignmentMark[0] });
+    } else if (assignmentMark?.length === 0) {
+      dispatch({ type: "ADD_ASSIGNMENT_MARK_RESPONSE", payload: {} });
+      dispatch({ type: "GET_ASSIGNMENT_MARK", payload: {} });
     }
-  }, [fetchAssignmentByVideoIdSuccess, assignmentInfo]);
+  }, [assignmentMark]);
 
   // handler submit
   const handleSubmit = (e) => {
@@ -92,10 +128,10 @@ const VideoDescription = ({ video }) => {
       addAssignmentMark({
         student_id: student?.id,
         student_name: student?.name,
-        assignment_id: assignmentId,
-        title: assignmentTitle,
+        assignment_id: state?.assignmentInfo?.id,
+        title: state?.assignmentInfo?.title,
         createdAt: new Date().toISOString(),
-        totalMark,
+        totalMark: state?.assignmentInfo?.totalMark,
         mark: 0,
         repo_link,
         status: "pending",
@@ -108,6 +144,18 @@ const VideoDescription = ({ video }) => {
   const btnDisable = "border-red-500 text-gray-400";
   const btnActive = "border-cyan text-cyan hover:bg-cyan hover:text-primary";
 
+  useEffect(() => {
+    if (getAssignmentMark?.id) {
+      setAssignmentBtn(true);
+    } else if (addAssignmentMarkResponse?.id) {
+      if (addAssignmentMarkResponse.assignment_id === assignmentInfo?.id) {
+        setAssignmentBtn(true);
+      }
+    } else {
+      setAssignmentBtn(false);
+    }
+  }, [addAssignmentMarkResponse, getAssignmentMark, assignmentInfo]);
+
   return (
     <div>
       <h1 className="text-lg font-semibold tracking-tight text-slate-100">
@@ -119,33 +167,13 @@ const VideoDescription = ({ video }) => {
 
       <div className="flex gap-4">
         <button
-          disabled={
-            (assignmentMark?.length > 0
-              ? assignmentMark[0].status === "published" ||
-                assignmentMark[0].status === "pending"
-              : false) ||
-            (responseAddAssignmentMark?.length > 0 &&
-            responseAddAssignmentMark &&
-            responseAddAssignmentMark.assignment_id === assignmentInfo?.id
-              ? responseAddAssignmentMark.status === "published" ||
-                responseAddAssignmentMark.status === "pending"
-              : false)
-          }
+          disabled={assignmentBtn}
           onClick={() => setShowModal(!showModal)}
           className={`px-3 font-bold py-1 border rounded-full text-sm   ${
-            (assignmentMark?.length > 0 &&
-            (assignmentMark[0].status === "published" ||
-              assignmentMark[0].status === "pending")
-              ? btnDisable
-              : btnActive) ||
-            (assignmentInfo.length > 0 &&
-            responseAddAssignmentMark &&
-            responseAddAssignmentMark.assignment_id === assignmentInfo[0].id
-              ? btnDisable
-              : btnActive)
+            assignmentBtn ? btnDisable : btnActive
           }`}
         >
-          এসাইনমেন্ট
+          {assignmentBtn ? "🚫 এসাইনমেন্ট নাই" : "এসাইনমেন্ট"}
         </button>
 
         <Link
@@ -159,7 +187,7 @@ const VideoDescription = ({ video }) => {
             quizMark?.length > 0 ? btnDisable : btnActive
           }`}
         >
-          কুইজে অংশগ্রহণ করুন
+          {quizMark?.length > 0 ? "🚫 কুইজ বাকি নাই" : "কুইজে অংশগ্রহণ করুন"}
         </Link>
       </div>
       <p className="mt-4 text-sm text-slate-400 leading-6">{description}</p>

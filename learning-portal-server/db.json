@@ -440,42 +440,6 @@
       "id": 4
     },
     {
-      "student_id": 8,
-      "student_name": "Md Hadiuzzaman",
-      "assignment_id": 6,
-      "title": "Assignment 11 - ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga",
-      "createdAt": "2023-04-06T10:20:33.143Z",
-      "totalMark": 80,
-      "mark": 80,
-      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
-      "status": "published",
-      "id": 5
-    },
-    {
-      "student_id": 8,
-      "student_name": "Md Hadiuzzaman",
-      "assignment_id": 5,
-      "title": "Assignment 10 - ট্রাফিক সিগন্যালেই পুলিশের ইফতার | DBC NEWS",
-      "createdAt": "2023-04-06T10:21:56.529Z",
-      "totalMark": 100,
-      "mark": 100,
-      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
-      "status": "published",
-      "id": 6
-    },
-    {
-      "student_id": 8,
-      "student_name": "Md Hadiuzzaman",
-      "assignment_id": 2,
-      "title": "Assignment 2 - Implement Best Practices",
-      "createdAt": "2023-04-06T10:25:41.198Z",
-      "totalMark": 100,
-      "mark": 100,
-      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
-      "status": "published",
-      "id": 7
-    },
-    {
       "student_id": 9,
       "student_name": "Anik",
       "assignment_id": 2,
@@ -502,13 +466,13 @@
     {
       "student_id": 8,
       "student_name": "Md Hadiuzzaman",
-      "assignment_id": 1,
-      "title": "Assignment 1 - Implement Debounce Function",
-      "createdAt": "2023-04-07T16:01:53.189Z",
-      "totalMark": 100,
-      "mark": 100,
+      "assignment_id": 6,
+      "title": "Assignment 11 - ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga",
+      "createdAt": "2023-04-07T21:51:20.545Z",
+      "totalMark": 80,
+      "mark": 0,
       "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
-      "status": "published",
+      "status": "pending",
       "id": 10
     },
     {
@@ -516,12 +480,36 @@
       "student_name": "Md Hadiuzzaman",
       "assignment_id": 4,
       "title": "Assignment 9 - হিজাব না পরায় মাথায় ছুড়ে মারলো দই! ফের উত্তাল ইরান! ",
-      "createdAt": "2023-04-07T16:05:46.837Z",
+      "createdAt": "2023-04-07T21:51:32.675Z",
       "totalMark": 80,
-      "mark": 80,
+      "mark": 0,
       "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
-      "status": "published",
+      "status": "pending",
       "id": 11
+    },
+    {
+      "student_id": 8,
+      "student_name": "Md Hadiuzzaman",
+      "assignment_id": 2,
+      "title": "Assignment 2 - Implement Best Practices",
+      "createdAt": "2023-04-07T21:51:48.044Z",
+      "totalMark": 100,
+      "mark": 0,
+      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
+      "status": "pending",
+      "id": 12
+    },
+    {
+      "student_id": 8,
+      "student_name": "Md Hadiuzzaman",
+      "assignment_id": 3,
+      "title": "Assignment 3 - আল্লাহ্‌র তলোয়ার খালিদ বিন ওয়ালীদের পর্ব- ৩২ ",
+      "createdAt": "2023-04-07T21:51:57.959Z",
+      "totalMark": 600,
+      "mark": 0,
+      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
+      "status": "pending",
+      "id": 13
     }
   ],
   "quizMark": [
@@ -536,6 +524,18 @@
       "totalWrong": 1,
       "totalMark": 10,
       "mark": 5
+    },
+    {
+      "student_id": 8,
+      "student_name": "Md Hadiuzzaman",
+      "video_id": 1,
+      "video_title": "Debounce Function in JavaScript - JavaScript Job Interview question",
+      "totalQuiz": 2,
+      "totalCorrect": 2,
+      "totalWrong": 0,
+      "totalMark": 10,
+      "mark": 10,
+      "id": 2
     }
   ]
 }
