@@ -10,11 +10,15 @@ import {
   useGetAssignmentMarkByAssignmentIdStudentIdQuery,
 } from "../../../features/assignmentMark/assignmentMarkAPI";
 import { selectMemoizedAuth } from "../../../features/auth/authSelector";
+import { useGetQuizByVideoIdQuery } from "../../../features/quizzes/quizzesAPI";
 import { useGetQuizMarkByVideoIdAndStudentIdQuery } from "../../../features/quizzesMark/quizzesMarkSlice";
+import CheckIcon from "../../ui/CheckIcon";
+import DisableIcon from "../../ui/DisableIcon";
 
 // ! for use reducer start
 const initialState = {
   assignmentInfo: {},
+  getQuizByVideoId: [],
   addAssignmentMarkResponse: {},
   getAssignmentMark: {},
 };
@@ -23,7 +27,8 @@ const reducer = (state, action) => {
     case "ADD_ASSIGNMENT_INFO":
       const assignment = _.cloneDeep(action.payload);
       return { ...state, assignmentInfo: assignment };
-
+    case "ADD_QUIZ_INFO":
+      return { ...state, getQuizByVideoId: action.payload };
     case "ADD_ASSIGNMENT_MARK_RESPONSE":
       return { ...state, addAssignmentMarkResponse: action.payload };
 
@@ -43,33 +48,29 @@ const VideoDescription = ({ video }) => {
   const [assignmentBtn, setAssignmentBtn] = useState(false);
   const { videoId } = useParams();
 
-  const { assignmentInfo, addAssignmentMarkResponse, getAssignmentMark } =
-    state || {};
-
-  // console.log("addAssignmentMarkResponse", addAssignmentMarkResponse);
-  // console.log("getAssignmentMark", getAssignmentMark);
+  const {
+    assignmentInfo,
+    getQuizByVideoId,
+    addAssignmentMarkResponse,
+    getAssignmentMark,
+  } = state || {};
 
   // all redux state
   // ! for get information and create new assignment mark  (1)
   const student = useSelector(selectMemoizedAuth);
-  // TODO {complete}             added useReducer                 (2)
+  // TODO {complete}         (2)
   const { data: assignmentInformation } = useGetAssignmentByVideoIdQuery(
     videoId,
     {
       refetchOnMountOrArgChange: true,
     }
   );
-  // const {
-  //   id: assignmentId,
-  //   title: assignmentTitle,
-  //   totalMark,
-  // } = state?.assignmentInfo || {};
 
-  // ! for create new assignment mark in database     added useReducer        (3)
+  // ! for create new assignment mark in database     (3)
   const [addAssignmentMark, { data, isSuccess }] =
     useAddAssignmentMarkMutation();
 
-  // start fetch update assignment mark data    added useReducer    (4)
+  // start fetch update assignment mark data   (4)
   const { data: assignmentMark } =
     useGetAssignmentMarkByAssignmentIdStudentIdQuery(
       {
@@ -87,6 +88,16 @@ const VideoDescription = ({ video }) => {
     },
     { refetchOnMountOrArgChange: true }
   );
+
+  // ! get quiz by video id
+  const { data: getQuiz } = useGetQuizByVideoIdQuery(videoId);
+
+  useEffect(() => {
+    dispatch({
+      type: "ADD_QUIZ_INFO",
+      payload: getQuiz,
+    });
+  }, [getQuiz]);
 
   useEffect(() => {
     if (assignmentInformation?.length > 0) {
@@ -140,9 +151,10 @@ const VideoDescription = ({ video }) => {
     }
     e.target.reset();
   };
-
-  const btnDisable = "border-red-500 text-gray-400";
-  const btnActive = "border-cyan text-cyan hover:bg-cyan hover:text-primary";
+  // border-red-500
+  const btnDisable = " text-gray-400";
+  const btnActive =
+    "border-cyan border text-cyan hover:bg-cyan hover:text-primary";
 
   useEffect(() => {
     if (getAssignmentMark?.id) {
@@ -158,7 +170,7 @@ const VideoDescription = ({ video }) => {
 
   return (
     <div>
-      <h1 className="text-lg font-semibold tracking-tight text-slate-100">
+      <h1 className="text-lg font-semibold  tracking-tight text-slate-100">
         {title}
       </h1>
       <h2 className=" pb-4 text-sm leading-[1.7142857] text-slate-400">
@@ -166,29 +178,43 @@ const VideoDescription = ({ video }) => {
       </h2>
 
       <div className="flex gap-4">
-        <button
-          disabled={assignmentBtn}
-          onClick={() => setShowModal(!showModal)}
-          className={`px-3 font-bold py-1 border rounded-full text-sm   ${
-            assignmentBtn ? btnDisable : btnActive
-          }`}
-        >
-          {assignmentBtn ? "🚫 এসাইনমেন্ট নাই" : "এসাইনমেন্ট"}
-        </button>
+        {assignmentInfo?.id ? (
+          <button
+            disabled={assignmentBtn}
+            onClick={() => setShowModal(!showModal)}
+            className={`px-3 font-bold py-1 rounded-full text-sm   ${
+              assignmentBtn ? btnDisable : btnActive
+            }`}
+          >
+            {assignmentBtn ? (
+              <CheckIcon text="এসাইনমেন্ট দিয়েছেন" />
+            ) : (
+              "এসাইনমেন্ট"
+            )}
+          </button>
+        ) : null}
 
-        <Link
-          disabled
-          to={
-            quizMark?.length > 0
-              ? `/courses/${videoId}`
-              : `/courses/${videoId}/quizzes`
-          }
-          className={`px-3 font-bold py-1 border   rounded-full text-sm  ${
-            quizMark?.length > 0 ? btnDisable : btnActive
-          }`}
-        >
-          {quizMark?.length > 0 ? "🚫 কুইজ বাকি নাই" : "কুইজে অংশগ্রহণ করুন"}
-        </Link>
+        {getQuizByVideoId?.length > 0 ? (
+          <Link
+            disabled
+            to={
+              quizMark?.length > 0
+                ? `/courses/${videoId}`
+                : `/courses/${videoId}/quizzes`
+            } //
+            className={`px-3 font-bold  py-1 rounded-full text-sm  ${
+              quizMark?.length > 0 ? btnDisable : btnActive
+            }`}
+          >
+            {quizMark?.length > 0 ? (
+              <CheckIcon text="কুইজ দিয়েছেন" />
+            ) : (
+              "কুইজে অংশগ্রহণ করুন"
+            )}
+          </Link>
+        ) : (
+          <DisableIcon text="কুইজ নেই" />
+        )}
       </div>
       <p className="mt-4 text-sm text-slate-400 leading-6">{description}</p>
 
