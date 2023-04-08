@@ -75,13 +75,13 @@ const LeaderBoard = () => {
   const auth = useSelector(selectMemoizedAuth);
 
   const { data: userData } = useGetUsersQuery(undefined, {
-    refetchOnFocus: true,
+    pollingInterval: 1000 * 60,
   });
   const { data: quizMark } = useGetQuizMarkQuery(undefined, {
-    refetchOnFocus: true,
+    pollingInterval: 1000 * 60,
   });
   const { data: assignmentsMar } = useGetAssignmentsMarkQuery(undefined, {
-    refetchOnFocus: true,
+    pollingInterval: 1000 * 60,
   });
 
   useEffect(() => {

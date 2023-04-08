@@ -4,6 +4,7 @@ export const assignmentApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAssignments: builder.query({
       query: () => "/assignments",
+      keepUnusedDataFor: 600,
     }),
     getAssignment: builder.query({
       query: (id) => `/assignments/${id}`,

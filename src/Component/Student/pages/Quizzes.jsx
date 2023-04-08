@@ -32,7 +32,6 @@ const reducer = (state, action) => {
 }; // ! for use reducer end
 
 const Quizzes = () => {
-  // <title>Quiz - LWS</title>
   // all local state
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const { videoId } = useParams();

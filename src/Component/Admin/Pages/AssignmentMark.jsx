@@ -11,7 +11,7 @@ const AdminAssignmentMark = () => {
     data: assignmentMark,
     isLoading,
     isError,
-  } = useGetAssignmentsMarkQuery();
+  } = useGetAssignmentsMarkQuery(undefined, { pollingInterval: 1000 * 60 });
 
   // utils
   const total = assignmentMark?.length;

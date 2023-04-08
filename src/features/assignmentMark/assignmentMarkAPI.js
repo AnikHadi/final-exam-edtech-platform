@@ -10,7 +10,7 @@ export const assignmentMarkApi = apiSlice.injectEndpoints({
     }),
     getAssignmentMarkByAssignmentIdStudentId: builder.query({
       query: ({ assignmentId, studentId }) =>
-        `/assignmentMark?assignment_id_like=${assignmentId}&student_id_like=${studentId}`,
+        `/assignmentMark?assignment_id=${assignmentId}&student_id=${studentId}`,
     }),
     addAssignmentMark: builder.mutation({
       query: (data) => ({

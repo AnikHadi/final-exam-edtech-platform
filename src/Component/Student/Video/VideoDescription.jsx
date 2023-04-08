@@ -45,6 +45,7 @@ const VideoDescription = ({ video }) => {
 
   // all local state
   const [showModal, setShowModal] = useState(false);
+  const [showModalForRepoLink, setShowModalForRepoLink] = useState(false);
   const [assignmentBtn, setAssignmentBtn] = useState(false);
   const { videoId } = useParams();
 
@@ -89,7 +90,7 @@ const VideoDescription = ({ video }) => {
     { refetchOnMountOrArgChange: true }
   );
 
-  // ! get quiz by video id
+  // ! get quiz by video id     (6)
   const { data: getQuiz } = useGetQuizByVideoIdQuery(videoId);
 
   useEffect(() => {
@@ -178,6 +179,26 @@ const VideoDescription = ({ video }) => {
       </h2>
 
       <div className="flex gap-4">
+        {/* Show total number  */}
+        {assignmentInfo.totalMark && (
+          <div className="rounded-full px-4 py-1 bg-gradient-to-r from-cyan-500 to-blue-500">
+            <p className="text-center ">
+              সর্বমোট নাম্বার - {assignmentInfo?.totalMark}
+            </p>
+          </div>
+        )}
+
+        {/* show repo link Btn */}
+        {getAssignmentMark.repo_link && (
+          <button
+            className="rounded-full px-4 py-1 bg-gradient-to-r from-green-500 to-blue-500"
+            onClick={() => setShowModalForRepoLink(!showModalForRepoLink)}
+          >
+            <p className="text-center ">আপনি যা জমা দিয়েছেন</p>
+          </button>
+        )}
+
+        {/* Assignment Btn */}
         {assignmentInfo?.id ? (
           <button
             disabled={assignmentBtn}
@@ -187,13 +208,20 @@ const VideoDescription = ({ video }) => {
             }`}
           >
             {assignmentBtn ? (
-              <CheckIcon text="এসাইনমেন্ট দিয়েছেন" />
+              <CheckIcon
+                text={`প্রাপ্ত নাম্বার - ${
+                  getAssignmentMark.mark > 0
+                    ? getAssignmentMark.mark
+                    : "PENDING"
+                }`}
+              />
             ) : (
               "এসাইনমেন্ট"
             )}
           </button>
         ) : null}
 
+        {/* quiz Btn */}
         {getQuizByVideoId?.length > 0 ? (
           <Link
             disabled
@@ -202,7 +230,7 @@ const VideoDescription = ({ video }) => {
                 ? `/courses/${videoId}`
                 : `/courses/${videoId}/quizzes`
             } //
-            className={`px-3 font-bold  py-1 rounded-full text-sm  ${
+            className={`ml-auto px-3 font-bold  py-1 rounded-full text-sm  ${
               quizMark?.length > 0 ? btnDisable : btnActive
             }`}
           >
@@ -217,7 +245,31 @@ const VideoDescription = ({ video }) => {
         )}
       </div>
       <p className="mt-4 text-sm text-slate-400 leading-6">{description}</p>
+      {/* for show repo link */}
+      <Modal
+        show={showModalForRepoLink}
+        size="md"
+        popup={true}
+        onClose={() => setShowModalForRepoLink(!showModalForRepoLink)}
+      >
+        <Modal.Header className="bg-slate-800" />
+        <Modal.Body className="bg-slate-800">
+          <div>
+            <h3 className="text-xl font-medium text-gray-50 pb-8">
+              আপনি এসাইনমেন্ট এ যা{" "}
+              <span className="text-cyan-500 text-2xl ">জমা দিয়েছেন</span>
+            </h3>
+            <div>
+              <p className="pb-3">রিপোসিটরি লিঙ্ক</p> <hr />
+              <p className="py-3 px-3 select-all hover:bg-slate-700">
+                {getAssignmentMark?.repo_link}
+              </p>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
 
+      {/* for repo link submit */}
       <Modal
         show={showModal}
         size="md"

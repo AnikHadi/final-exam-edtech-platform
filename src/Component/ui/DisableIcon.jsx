@@ -2,7 +2,7 @@ import React from "react";
 
 const DisableIcon = ({ text }) => {
   return (
-    <p className="text-red-700 flex items-center">
+    <p className="ml-auto text-red-700 flex items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
