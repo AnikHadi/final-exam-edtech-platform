@@ -5,7 +5,6 @@ const AllStudentPositionList = ({ data }) => {
   const uniqueTotalMarkArray = [...new Set(totalMarkArray)].slice(0, 20);
   // Top 20 last value index in unique total mark
   const lastTotalMarkNumber = uniqueTotalMarkArray.slice(-1)[0];
-
   return (
     data.length > 0 && (
       <div className="my-8">

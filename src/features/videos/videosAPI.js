@@ -1,8 +1,7 @@
 import { apiSlice } from "../api/apiSlice";
 import { assignmentApi } from "../assignment/assignmentAPI";
+import { assignmentMarkApi } from "../assignmentMark/assignmentMarkAPI";
 import { quizzesApi } from "../quizzes/quizzesAPI";
-{
-}
 
 export const videoApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -80,27 +79,77 @@ export const videoApi = apiSlice.injectEndpoints({
             ).unwrap();
             // delete video connect assignment deleted
             try {
-              dispatch(
-                assignmentApi.endpoints.deleteAssignment.initiate(
-                  resAssignment[0]?.id
-                )
-              );
+              resAssignment?.length > 0 &&
+                dispatch(
+                  assignmentApi.endpoints.deleteAssignment.initiate(
+                    resAssignment[0]?.id
+                  )
+                );
             } catch (error) {
-              console.log(error);
+              // do nothing
             }
 
-            // delete video connect quiz
+            // ! delete video connect all assignment mark
+            const resAssignmentsMarkByAssignmentId =
+              resAssignment?.length > 0 &&
+              (await dispatch(
+                assignmentMarkApi.endpoints.getAssignmentMarkByAssignmentId.initiate(
+                  resAssignment[0].id
+                )
+              ).unwrap());
+            const assignmentsMarkIds = resAssignmentsMarkByAssignmentId?.map(
+              (ass) => ass.id
+            );
+            // delete video connect quiz deleted
+            try {
+              assignmentsMarkIds.length > 0 &&
+                assignmentsMarkIds.map((id) => {
+                  return dispatch(
+                    assignmentMarkApi.endpoints.deleteAssignmentMark.initiate(
+                      id
+                    )
+                  );
+                });
+            } catch (error) {
+              // do nothing
+            }
+            // ! delete video connect all assignment mark
+
+            // * delete video connect quiz
             const resQuiz = await dispatch(
               quizzesApi.endpoints.getQuizByVideoId.initiate(arg)
             ).unwrap();
+            const quizzesId = resQuiz?.map((ass) => ass.id);
             // delete video connect quiz deleted
             try {
-              dispatch(
-                quizzesApi.endpoints.deleteQuiz.initiate(resQuiz[0]?.id)
-              );
+              quizzesId.length > 0 &&
+                quizzesId.map((id) =>
+                  dispatch(quizzesApi.endpoints.deleteQuiz.initiate(id))
+                );
             } catch (error) {
-              console.log(error);
+              //  do nothing
             }
+            // ! delete video connect all quiz mark
+            const resQuizzesMark = await dispatch(
+              quizzesApi.endpoints.getAssignmentMarkByAssignmentId.initiate(
+                resAssignment[0].id
+              )
+            ).unwrap();
+            const quizzesMarkId = resQuizzesMark.map((ass) => ass.id);
+            // delete video connect quiz deleted
+            try {
+              quizzesMarkId.length > 0 &&
+                quizzesMarkId.map((id) =>
+                  dispatch(
+                    assignmentMarkApi.endpoints.deleteAssignmentMark.initiate(
+                      id
+                    )
+                  )
+                );
+            } catch (error) {
+              //  do nothing
+            }
+            // ! delete video connect all quiz mark
           }
         } catch (error) {
           // do nothing
@@ -117,5 +166,3 @@ export const {
   useEditVideoMutation,
   useDeleteVideoMutation,
 } = videoApi;
-
-// console.log(JSON.parse(JSON.stringify(draft)));

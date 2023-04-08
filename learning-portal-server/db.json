@@ -111,24 +111,6 @@
       "id": 10
     },
     {
-      "title": "ygdjfgjsfbzjshjhfe d g  g   g s rgdsgrsga",
-      "description": "gessgdxb  hd tsd gd dg dr",
-      "url": "https://www.youtube.com/embed/wTbr92TvPDo",
-      "views": "170 k",
-      "duration": "13.6",
-      "createdAt": "2023-04-02T19:11:28.364Z",
-      "id": 11
-    },
-    {
-      "title": "shmef smfesmf asnfe smfhejsf",
-      "description": "hmf hf mn fw hwe w wf",
-      "url": "https://www.youtube.com/embed/dD9O8DnIBj4",
-      "views": "52.3 k",
-      "duration": "13.6",
-      "createdAt": "2023-04-07T22:00:28.774Z",
-      "id": 12
-    },
-    {
       "title": "দুই বন্ধু চ্যালেঞ্জ করলাম ১৫ রমজান আকাশে কোন শব্দ হবে না মুফতি রেজাউল করিম আবরার Rezaul Karim Abrar",
       "description": "দুই বন্ধু চ্যালেঞ্জ করলাম ১৫ রমজান আকাশে কোন শব্দ হবে না মুফতি রেজাউল করিম আবরার Rezaul Karim Abrar\n\n15-রমজানে-কি-হবে \n\n১৫-রমজান-শুক্রবার-আওয়াজ",
       "url": "https://www.youtube.com/embed/y3LlIMULf9s",
@@ -173,20 +155,6 @@
       "video_title": "ট্রাফিক সিগন্যালেই পুলিশের ইফতার | DBC NEWS",
       "totalMark": 100,
       "id": 5
-    },
-    {
-      "title": "Assignment 11 - ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga",
-      "video_id": 11,
-      "video_title": "ygdjfgjsfbzjshjhfe d g  g   g s rgdsgrsga",
-      "totalMark": 80,
-      "id": 6
-    },
-    {
-      "title": "Assignment 12 - ggg",
-      "video_id": 12,
-      "video_title": "shmef smfesmf asnfe smfhejsf",
-      "totalMark": 10,
-      "id": 7
     }
   ],
   "quizzes": [
@@ -385,34 +353,6 @@
         }
       ],
       "id": 7
-    },
-    {
-      "question": "ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga",
-      "video_id": 11,
-      "video_title": "ygdjfgjsfbzjshjhfe d g  g   g s rgdsgrsga",
-      "options": [
-        {
-          "id": 1,
-          "option": "ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga 11111111111",
-          "isCorrect": true
-        },
-        {
-          "id": 2,
-          "option": "ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga 2222222222",
-          "isCorrect": false
-        },
-        {
-          "id": 3,
-          "option": "ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga 3333333",
-          "isCorrect": false
-        },
-        {
-          "id": 4,
-          "option": "ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga 44444444444",
-          "isCorrect": false
-        }
-      ],
-      "id": 8
     }
   ],
   "assignmentMark": [
@@ -491,18 +431,6 @@
     {
       "student_id": 8,
       "student_name": "Md Hadiuzzaman",
-      "assignment_id": 6,
-      "title": "Assignment 11 - ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga",
-      "createdAt": "2023-04-07T21:51:20.545Z",
-      "totalMark": 80,
-      "mark": 80,
-      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
-      "status": "published",
-      "id": 10
-    },
-    {
-      "student_id": 8,
-      "student_name": "Md Hadiuzzaman",
       "assignment_id": 4,
       "title": "Assignment 9 - হিজাব না পরায় মাথায় ছুড়ে মারলো দই! ফের উত্তাল ইরান! ",
       "createdAt": "2023-04-07T21:51:32.675Z",
@@ -551,18 +479,6 @@
     {
       "student_id": 8,
       "student_name": "Md Hadiuzzaman",
-      "assignment_id": 7,
-      "title": "Assignment 12 - ggg",
-      "createdAt": "2023-04-08T01:04:45.767Z",
-      "totalMark": 10,
-      "mark": 10,
-      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
-      "status": "published",
-      "id": 15
-    },
-    {
-      "student_id": 8,
-      "student_name": "Md Hadiuzzaman",
       "assignment_id": 5,
       "title": "Assignment 10 - ট্রাফিক সিগন্যালেই পুলিশের ইফতার | DBC NEWS",
       "createdAt": "2023-04-08T01:05:28.430Z",
@@ -587,26 +503,14 @@
     {
       "student_id": 9,
       "student_name": "Anik",
-      "assignment_id": 6,
-      "title": "Assignment 11 - ygdjfgjsfbzjshjhfe d g g g s rgdsgrsga",
-      "createdAt": "2023-04-08T02:07:09.783Z",
+      "assignment_id": 4,
+      "title": "Assignment 9 - হিজাব না পরায় মাথায় ছুড়ে মারলো দই! ফের উত্তাল ইরান! ",
+      "createdAt": "2023-04-08T13:57:33.782Z",
       "totalMark": 80,
       "mark": 80,
       "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
       "status": "published",
-      "id": 18
-    },
-    {
-      "student_id": 9,
-      "student_name": "Anik",
-      "assignment_id": 7,
-      "title": "Assignment 12 - ggg",
-      "createdAt": "2023-04-08T02:16:45.353Z",
-      "totalMark": 10,
-      "mark": 10,
-      "repo_link": "http://www.github.com/HadiAnik/repo-link.git",
-      "status": "published",
-      "id": 19
+      "id": 20
     }
   ],
   "quizMark": [
@@ -717,6 +621,42 @@
       "totalMark": 5,
       "mark": 5,
       "id": 9
+    },
+    {
+      "student_id": 8,
+      "student_name": "Md Hadiuzzaman",
+      "video_id": 14,
+      "video_title": "6666666666",
+      "totalQuiz": 2,
+      "totalCorrect": 1,
+      "totalWrong": 1,
+      "totalMark": 10,
+      "mark": 5,
+      "id": 10
+    },
+    {
+      "student_id": 8,
+      "student_name": "Md Hadiuzzaman",
+      "video_id": 15,
+      "video_title": "77777777777777777",
+      "totalQuiz": 2,
+      "totalCorrect": 2,
+      "totalWrong": 0,
+      "totalMark": 10,
+      "mark": 10,
+      "id": 11
+    },
+    {
+      "student_id": 9,
+      "student_name": "Anik",
+      "video_id": 14,
+      "video_title": "6666666666",
+      "totalQuiz": 2,
+      "totalCorrect": 1,
+      "totalWrong": 1,
+      "totalMark": 10,
+      "mark": 5,
+      "id": 12
     }
   ]
 }

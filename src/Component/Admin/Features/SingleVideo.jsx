@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useDeleteVideoMutation } from "../../../features/videos/videosAPI";
 import AddVideoInput from "../InputForm/AddVideoInput";
 
-const SingleVideo = ({ video, setStatus, setMessage }) => {
+const SingleVideo = ({ video }) => {
   // all local state
   const { id, title, description } = video || {};
   const [showModal, setShowModal] = useState(false);
@@ -12,8 +13,7 @@ const SingleVideo = ({ video, setStatus, setMessage }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      setStatus("success");
-      setMessage("Successfully deleted this video.");
+      toast("Successfully deleted this video.");
     }
   }, [isSuccess]);
 

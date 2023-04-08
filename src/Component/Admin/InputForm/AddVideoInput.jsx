@@ -6,13 +6,7 @@ import {
   useEditVideoMutation,
 } from "../../../features/videos/videosAPI";
 
-const AddVideoInput = ({
-  showModal,
-  setShowModal,
-  video,
-  setMessage,
-  setStatus,
-}) => {
+const AddVideoInput = ({ showModal, setShowModal, video }) => {
   const { id, title, duration, views, url, description } = video || {};
 
   const [addVideo, { isError: addError, isSuccess: addSuccess }] =
@@ -22,18 +16,23 @@ const AddVideoInput = ({
 
   useEffect(() => {
     if (addSuccess) {
-      setMessage("Successfully added this video in database.");
-      setStatus("success");
+      toast("Successfully added this video in database.");
       setShowModal(false);
     } else if (addError) {
       toast("Can not add video for internal Error!");
-    } else if (editSuccess) {
+    }
+  }, [addError, addSuccess, setShowModal]);
+
+  useEffect(() => {
+    if (editSuccess) {
       toast("Successfully edit this video in database.");
       setShowModal(false);
     } else if (editError) {
       toast("Can not update video for internal Error!");
     }
-  }, [addError, editError, addSuccess, editSuccess]);
+  }, [editSuccess, editError, setShowModal]);
+
+  // this modal system Control form system not work properly
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,12 +58,8 @@ const AddVideoInput = ({
           id,
         },
       });
-      setStatus("");
-      setMessage("");
     } else {
       addVideo(newVideo);
-      setStatus("");
-      setMessage("");
     }
     e.target.reset();
   };

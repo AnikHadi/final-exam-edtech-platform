@@ -56,12 +56,7 @@ const AdminVideos = () => {
 
                 <tbody className="divide-y divide-slate-600/50">
                   {videos?.map((video) => (
-                    <SingleVideo
-                      video={video}
-                      setMessage={setMessage}
-                      setStatus={setStatus}
-                      key={video.id}
-                    />
+                    <SingleVideo video={video} key={video.id} />
                   ))}
                 </tbody>
               </table>

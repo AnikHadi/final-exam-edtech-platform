@@ -12,6 +12,9 @@ export const assignmentMarkApi = apiSlice.injectEndpoints({
       query: ({ assignmentId, studentId }) =>
         `/assignmentMark?assignment_id=${assignmentId}&student_id=${studentId}`,
     }),
+    getAssignmentMarkByAssignmentId: builder.query({
+      query: (assignmentId) => `/assignmentMark?assignment_id=${assignmentId}`,
+    }),
     addAssignmentMark: builder.mutation({
       query: (data) => ({
         url: "/assignmentMark",
@@ -63,6 +66,31 @@ export const assignmentMarkApi = apiSlice.injectEndpoints({
         }
       },
     }),
+    deleteAssignmentMark: builder.mutation({
+      query: (id) => ({
+        url: `/assignmentMark/${id}`,
+        method: "DELETE",
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const mark = await queryFulfilled;
+          if (Object.keys(mark.data).length === 0) {
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getAssignmentsMark",
+                undefined,
+                (draft) => {
+                  const index = draft.findIndex((item) => item.id === arg);
+                  draft.splice(index, 1);
+                }
+              )
+            );
+          }
+        } catch (error) {
+          // do nothing
+        }
+      },
+    }),
   }),
 });
 
@@ -70,6 +98,8 @@ export const {
   useGetAssignmentsMarkQuery,
   useGetAssignmentMarkQuery,
   useGetAssignmentMarkByAssignmentIdStudentIdQuery,
+  useGetAssignmentMarkByAssignmentIdQuery,
   useAddAssignmentMarkMutation,
   useEditAssignmentMarkMutation,
+  useDeleteAssignmentMarkMutation,
 } = assignmentMarkApi;
