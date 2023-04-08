@@ -45,7 +45,6 @@ export const quizMarkApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const quizMark = await queryFulfilled;
-          console.log(quizMark);
           if (Object.keys(quizMark.data).length === 0) {
             dispatch(
               apiSlice.util.updateQueryData(
@@ -53,7 +52,6 @@ export const quizMarkApi = apiSlice.injectEndpoints({
                 undefined,
                 (draft) => {
                   const index = draft.findIndex((item) => item.id === arg);
-                  console.log(index);
                   draft.splice(index, 1);
                 }
               )

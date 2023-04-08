@@ -70,7 +70,6 @@ export const quizzesApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const quiz = await queryFulfilled;
-          console.log(quiz);
           if (Object.keys(quiz.data).length === 0) {
             dispatch(
               apiSlice.util.updateQueryData(
@@ -78,7 +77,6 @@ export const quizzesApi = apiSlice.injectEndpoints({
                 undefined,
                 (draft) => {
                   const index = draft.findIndex((item) => item.id === arg);
-                  console.log(index);
                   draft.splice(index, 1);
                 }
               )
